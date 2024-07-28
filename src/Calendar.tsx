@@ -5,17 +5,16 @@ function Calendar() {
     const [employees, setEmployees] = useState([]);
 
     useEffect(() => {
-        fetch("https://localhost:8080/Employees").then(response => response.json()).then(data => setEmployees(data)).catch(error => console.log(error));
+        fetch("http://localhost:8080/Employees").then(response => response.json()).then(data => setEmployees(data)).catch(error => console.log(error));
     }, []) 
 
     const [config, setConfig] = useState({
         viewType: "Resources",
-
+        columns: employees,
     })
 
     return (
         <div>
-            <p>{employees}</p>
         </div>
     )
 }
