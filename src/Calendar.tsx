@@ -31,7 +31,7 @@ function Calendar() {
 
         // printing to console for debugging
         console.log(employees);
-    })
+    }, [])
 
     // this will update newEmployees when employees is populated with data
     useEffect(() => {
