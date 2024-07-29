@@ -1,13 +1,12 @@
-import Calendar from './Calendar.tsx';
-import './App.css'
+import Calendar from "./Calendar.tsx";
+import "./App.css";
 
 function App() {
-
   return (
     <>
-      <Calendar/>
+      <Calendar />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
