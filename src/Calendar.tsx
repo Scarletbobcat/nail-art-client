@@ -10,10 +10,13 @@ function Calendar() {
     const [employees, setEmployees] = useState<Employee[]>([]);
     const [newEmployees, setNewEmployees] = useState<DayPilot.CalendarColumnData[]>([]);
 
+    // fetching the employees data
     useEffect(() => {
+        // function that gets all employees
         const fetchEmployees = async () => {
             try {
                 const response = await fetch("http://localhost:8080/Employees");
+                console.log("Data recieved");
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
@@ -25,19 +28,21 @@ function Calendar() {
         };
         
         fetchEmployees();
+
+        // printing to console for debugging
+        console.log(employees);
+    },[])
+
+    // this will update newEmployees when employees is populated with data
+    useEffect(() => {
+        // maps employee fields to fields for columns of calendar
         setNewEmployees(employees.map((e) => {
             return {
                 "id": e.employeeID,
                 "name": e.employeeName,
             }
         }));
-        console.log(employees);
-        console.log(newEmployees);
-        
-    },[])
-
-
-
+    }, [employees])
 
     return (
         <div>
