@@ -16,7 +16,6 @@ function Calendar() {
         const fetchEmployees = async () => {
             try {
                 const response = await fetch("http://localhost:8080/Employees");
-                console.log("Data recieved");
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
@@ -28,9 +27,6 @@ function Calendar() {
         };
         
         fetchEmployees();
-
-        // printing to console for debugging
-        console.log(employees);
     }, [])
 
     // this will update newEmployees when employees is populated with data
