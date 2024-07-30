@@ -11,12 +11,68 @@ interface Employee {
   employeeName: string;
 }
 
+interface Appointment {
+  appointmentId: number;
+  employeeId: number;
+  serviceId: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+  name: string;
+  phoneNumber: string;
+}
+
+interface Events {
+  id: number;
+  start: string;
+  end: string;
+  resource: number;
+  text: string;
+}
+
 function Calendar() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [newEmployees, setNewEmployees] = useState<
     DayPilot.CalendarColumnData[]
   >([]);
+  const [events, setEvents] = useState<Appointment[]>([]);
+  const [newEvents, setNewEvents] = useState<Events[]>([]);
   const [startDate, setStartDate] = useState(DayPilot.Date.today());
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const date = startDate.toString().substring(0, 10);
+        const response = await fetch(
+          `http://localhost:8080/Appointments/date/${date}`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data: Appointment[] = await response.json();
+        setEvents(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAppointments();
+  }, [startDate]);
+
+  useEffect(() => {
+    setNewEvents(
+      events.map((event) => {
+        const startTime = event.startTime.substring(0, 8);
+        const endTime = event.endTime.substring(0, 8);
+        return {
+          id: event.appointmentId,
+          start: event.date + "T" + startTime,
+          end: event.date + "T" + endTime,
+          resource: event.employeeId,
+          text: event.name + ", \n" + event.phoneNumber,
+        };
+      })
+    );
+  }, [events]);
 
   // fetching the employees data
   useEffect(() => {
@@ -85,6 +141,7 @@ function Calendar() {
             viewType="Resources"
             columns={newEmployees}
             startDate={startDate}
+            events={newEvents}
           />
         </div>
       </div>
