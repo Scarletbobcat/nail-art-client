@@ -1,0 +1,16 @@
+#calendar-container {
+    display: flex;
+}
+
+#calendar {
+    padding: 10px;
+}
+
+#navigator {
+    padding: 10px;
+}
+
+button {
+    margin-right: 10px;
+    margin-left: 10px;
+}
