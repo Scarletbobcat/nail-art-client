@@ -30,6 +30,15 @@ interface Events {
   text: string;
 }
 
+const colors: { [key: number]: string } = {
+  0: "#ff8585",
+  1: "#ffb485",
+  2: "#fbff85",
+  3: "#9dff85",
+  4: "#85ccff",
+  5: "#d885ff",
+};
+
 function Calendar() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [newEmployees, setNewEmployees] = useState<
@@ -69,6 +78,7 @@ function Calendar() {
           end: event.date + "T" + endTime,
           resource: event.employeeId,
           text: event.name + ", \n" + event.phoneNumber,
+          barColor: colors[(event.employeeId % 6) + 1],
         };
       })
     );
@@ -109,20 +119,20 @@ function Calendar() {
   return (
     <>
       <div id="header">
-        <b>Day:</b>
-        <button
-          onClick={() => {
-            setStartDate(startDate.addDays(1));
-          }}
-        >
-          Next
-        </button>
+        <b>Day: </b>
         <button
           onClick={() => {
             setStartDate(startDate.addDays(-1));
           }}
         >
           Previous
+        </button>
+        <button
+          onClick={() => {
+            setStartDate(startDate.addDays(1));
+          }}
+        >
+          Next
         </button>
       </div>
       <div id="calendar-container">
