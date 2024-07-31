@@ -78,7 +78,7 @@ function Calendar() {
           end: event.date + "T" + endTime,
           resource: event.employeeId,
           text: event.name + ", \n" + event.phoneNumber,
-          barColor: colors[(event.employeeId % 6) + 1],
+          barColor: colors[event.employeeId % 6],
         };
       })
     );
