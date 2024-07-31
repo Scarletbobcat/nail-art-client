@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./Calendar.css";
 import {
   DayPilotCalendar,
@@ -30,6 +30,11 @@ interface Events {
   text: string;
 }
 
+interface Service {
+  serviceId: number;
+  serviceName: string;
+}
+
 const colors: { [key: number]: string } = {
   0: "#ff8585",
   1: "#ffb485",
@@ -40,6 +45,7 @@ const colors: { [key: number]: string } = {
 };
 
 function Calendar() {
+  const calendarRef = useRef(null);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [newEmployees, setNewEmployees] = useState<
     DayPilot.CalendarColumnData[]
@@ -47,7 +53,25 @@ function Calendar() {
   const [events, setEvents] = useState<Appointment[]>([]);
   const [newEvents, setNewEvents] = useState<Events[]>([]);
   const [startDate, setStartDate] = useState(DayPilot.Date.today());
+  const [services, setServices] = useState<Service[]>([]);
 
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/Services`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data: Service[] = await response.json();
+        setServices(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  // gets all appointments for current date shown
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -67,6 +91,7 @@ function Calendar() {
     fetchAppointments();
   }, [startDate]);
 
+  // maps appointments to event so calendar can read it
   useEffect(() => {
     setNewEvents(
       events.map((event) => {
@@ -77,12 +102,17 @@ function Calendar() {
           start: event.date + "T" + startTime,
           end: event.date + "T" + endTime,
           resource: event.employeeId,
-          text: event.name + ", \n" + event.phoneNumber,
+          text:
+            event.name +
+            "\n" +
+            services[event.serviceId - 1].serviceName +
+            "\n" +
+            event.phoneNumber,
           barColor: colors[event.employeeId % 6],
         };
       })
     );
-  }, [events]);
+  }, [events, services]);
 
   // fetching the employees data
   useEffect(() => {
@@ -152,6 +182,7 @@ function Calendar() {
             columns={newEmployees}
             startDate={startDate}
             events={newEvents}
+            ref={calendarRef}
           />
         </div>
       </div>
