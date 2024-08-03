@@ -86,12 +86,17 @@ function Calendar() {
             columns={employees}
             startDate={startDate}
             events={events.map((e, index) => {
+              let services = "";
+              console.log(e.services);
+              e.services.forEach(s => {
+                services = services + s + "\n";
+              })
               return {
                 id: index,
                 resource: e.employeeId,
                 start: e.date + e.startTime,
                 end: e.date + e.endTime,
-                text: e.name + "\n" + e.phoneNumber,
+                text: e.name + "\n" + services + e.phoneNumber,
                 barColor: employees.find((employee) => employee.id == e.employeeId)
                   .color,
               };
