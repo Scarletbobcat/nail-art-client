@@ -9,7 +9,6 @@ import {
 function Calendar() {
   const calendarRef = useRef(null);
   const [events, setEvents] = useState([]);
-  const [newEvents, setNewEvents] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [startDate, setStartDate] = useState(DayPilot.Date.today());
 
@@ -51,23 +50,6 @@ function Calendar() {
     fetchAppointments();
   }, [startDate]);
 
-  useEffect(() => {
-    setNewEvents(
-      events.map((e, index) => {
-        return {
-          id: index,
-          resource: e.employeeId,
-          start: e.date + e.startTime,
-          end: e.date + e.endTime,
-          text: e.name + "\n" + e.phoneNumber,
-          barColor: employees.find((employee) => employee.id == e.employeeId)
-            .color,
-        };
-      })
-    );
-    console.log(newEvents);
-  }, [events, employees]);
-
   return (
     <>
       <div id="header">
@@ -103,7 +85,17 @@ function Calendar() {
             viewType="Resources"
             columns={employees}
             startDate={startDate}
-            events={newEvents}
+            events={events.map((e, index) => {
+              return {
+                id: index,
+                resource: e.employeeId,
+                start: e.date + e.startTime,
+                end: e.date + e.endTime,
+                text: e.name + "\n" + e.phoneNumber,
+                barColor: employees.find((employee) => employee.id == e.employeeId)
+                  .color,
+              };
+            })}
             ref={calendarRef}
           />
         </div>
