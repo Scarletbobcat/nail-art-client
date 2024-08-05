@@ -1,27 +1,28 @@
-import "./Navbar.css";
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
+function Navbar() {
+  const navItems = [
+    {title: "Appointments", url: "/Calendar"},
+    {title: "Employees", url: "/Employees"},
+    {title: "Services", url: "/Services"},
+  ]
+
   return (
     <>
-      <div id="navbar-container">
-        <nav id="navbar">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/Calendar">Appointments</Link>
-            </li>
-            <li>
-              <Link to="/Employees">Employees</Link>
-            </li>
-            <li>
-              <Link to="/Services">Services</Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <nav>
+          <div className="top-0 flex justify-between mx-auto p-3 items-center border-b">
+              <div className="font-bold text-xl">
+                <Link to="/">Nail Art</Link>
+              </div>
+              <ul className="flex gap-8 md:gap-16 items-center justify-center text-center cursor-pointer">
+                  {navItems.map((link, index) => (
+                    <li key={index} className="text-sm"><Link to={link.url}>{link.title}</Link></li>
+                  ))}
+              </ul>
+          </div>
+      </nav>
     </>
   );
 }
+
+export default Navbar;

@@ -14,6 +14,8 @@ function Calendar() {
   const [services, setServices] = useState([]);
   const [startDate, setStartDate] = useState(DayPilot.Date.today());
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [appStart, setAppStart] = useState('');
+  const [appEnd, setAppEnd] = useState('');
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -96,6 +98,8 @@ function Calendar() {
         }
       })}
       isModalOpen={isModalOpen}
+      start={appStart}
+      end={appEnd}
       onClose={() => {
         setIsModalOpen(false);
       }}
@@ -133,9 +137,10 @@ function Calendar() {
               };
             })}
             ref={calendarRef}
-            onTimeRangeSelected={() => {
+            onTimeRangeSelected={(args) => {
               setIsModalOpen(true)
-              console.log(isModalOpen);
+              setAppStart(args.start.value)
+              setAppEnd(args.end.value)
             }}
           />
         </div>

@@ -3,7 +3,6 @@ import Home from "./Home/Home.jsx";
 import Employees from "./Employees/Employees.jsx";
 import Services from "./Services/Services.jsx";
 import Navbar from "./Navbar/Navbar.jsx";
-import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {

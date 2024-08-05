@@ -1,10 +1,15 @@
-/* eslint-disable react/no-unescaped-entities */
 import Select from "react-select";
-// import "./AppointmentModal.css";
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
-function AppointmentModal({ services, isModalOpen, onClose }) {
-    // if (!isModalOpen) return null;
+AppointmentModal.propTypes = {
+    services: PropTypes.array,
+    isModalOpen: PropTypes.bool,
+    onClose: PropTypes.func,
+    start: PropTypes.string,
+    end: PropTypes.string,
+}
+
+function AppointmentModal({ services, isModalOpen, onClose, start, end }) {
     return (
         <>
             {isModalOpen ? (    
@@ -30,8 +35,17 @@ function AppointmentModal({ services, isModalOpen, onClose }) {
                         </button>
                         </div>
                         {/*body*/}
-                        <div className="relative p-6 flex-auto">
-                        <Select isMulti options={services} className="text-black"/>
+                        <div className="grid grid-cols-2 p-6 gap-6 place-items-center">
+                            <label>Name</label>
+                            <input className="border-2 w-full ps-2 rounded" required placeholder="Tien"/>
+                            <label>Services</label>
+                            <Select isMulti options={services} className="text-black w-full" required/>
+                            <label>Phone Number</label>
+                            <input className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>
+                            <p>Start time</p>
+                            <p>{start}</p>
+                            <p>End time</p>
+                            <p>{end}</p>
                         </div>
                         {/*footer*/}
                         <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -53,11 +67,13 @@ function AppointmentModal({ services, isModalOpen, onClose }) {
                     </div>
                     </div>
                 </div>
-                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                <div className="opacity-60 fixed inset-0 z-40 bg-black"></div>
                 </>
             ) : null}
         </>
     )
 }
+
+
 
 export default AppointmentModal;
