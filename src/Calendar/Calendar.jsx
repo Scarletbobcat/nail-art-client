@@ -5,12 +5,32 @@ import {
   DayPilot,
   DayPilotNavigator,
 } from "@daypilot/daypilot-lite-react";
+import AppointmentModal from "./AppointmentModal";
 
 function Calendar() {
   const calendarRef = useRef(null);
   const [events, setEvents] = useState([]);
   const [employees, setEmployees] = useState([]);
+  const [services, setServices] = useState([]);
   const [startDate, setStartDate] = useState(DayPilot.Date.today());
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/Services");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setServices(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   // gets all employees
   useEffect(() => {
@@ -69,6 +89,17 @@ function Calendar() {
           Next
         </button>
       </div>
+      <AppointmentModal services={services.map((s) => {
+        return {
+          label: s.name,
+          value: s.id,
+        }
+      })}
+      isModalOpen={isModalOpen}
+      onClose={() => {
+        setIsModalOpen(false);
+      }}
+      />
       <div id="calendar-container">
         <div id="navigator">
           <DayPilotNavigator
@@ -87,6 +118,7 @@ function Calendar() {
             startDate={startDate}
             events={events.map((e, index) => {
               let services = "";
+              console.log(e.services);
               e.services.forEach(s => {
                 services = services + s + "\n";
               })
@@ -101,6 +133,10 @@ function Calendar() {
               };
             })}
             ref={calendarRef}
+            onTimeRangeSelected={() => {
+              setIsModalOpen(true)
+              console.log(isModalOpen);
+            }}
           />
         </div>
       </div>
