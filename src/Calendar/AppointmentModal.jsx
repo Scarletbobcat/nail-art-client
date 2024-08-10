@@ -1,4 +1,5 @@
 import Select from "react-select";
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 AppointmentModal.propTypes = {
@@ -7,9 +8,56 @@ AppointmentModal.propTypes = {
     onClose: PropTypes.func,
     start: PropTypes.string,
     end: PropTypes.string,
+    employee: PropTypes.number,
 }
 
-function AppointmentModal({ services, isModalOpen, onClose, start, end }) {
+function AppointmentModal({ services, isModalOpen, onClose, start, end, employee }) {
+    const [formData, setFormData] = useState({
+      name: "",
+      phoneNumber: "",
+      startTime: start.substring(10),
+      endTime: end.substring(10),
+      date: start.substring(0,10),
+      employeeId: employee,
+      services: [],  
+    })
+
+    function changeServices(selectedServices) {
+        const newServices = selectedServices.map((s) => {
+            return s.label;
+        })
+
+        setFormData({...formData, services: newServices});
+        console.log(formData);
+    }
+
+    function changeName(inputName) {
+        const newName = inputName;
+        setFormData({...formData, name: newName});
+        console.log(formData);
+    }
+
+    function changePhoneNumber(inputPhoneNumber) {
+        const newPN = inputPhoneNumber;
+        setFormData({...formData, phoneNumber: newPN});
+        console.log(formData);
+    }
+
+    // async function createAppointment(appointment) {
+    //     console.log(appointment);
+    //     try {
+    //         const response = await fetch("http://localhost:8080/Appointments/Create", {
+    //             method: "POST",
+    //             body: appointment,
+    //         })
+    //         if (!response.ok) {
+    //             throw new Error("Network error has occurred");
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
     return (
         <>
             {isModalOpen ? (    
@@ -37,11 +85,17 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end }) {
                         {/*body*/}
                         <div className="grid grid-cols-2 p-6 gap-6 place-items-center">
                             <label>Name</label>
-                            <input className="border-2 w-full ps-2 rounded" required placeholder="Tien"/>
+                            <input id="name" onChange={(e) => {
+                                changeName(e.target.value)
+                            }} className="border-2 w-full ps-2 rounded" required placeholder="Tien"/>
                             <label>Services</label>
-                            <Select isMulti options={services} className="text-black w-full" required/>
+                            <Select id="services" isMulti options={services}
+                                onChange={changeServices}
+                            className="text-black w-full" required/>
                             <label>Phone Number</label>
-                            <input className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>
+                            <input id="phoneNumber" onChange={(e) => {
+                                changePhoneNumber(e.target.value)
+                            }} className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>
                             <p>Start time</p>
                             <p>{start}</p>
                             <p>End time</p>

@@ -16,6 +16,7 @@ function Calendar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [appStart, setAppStart] = useState('');
   const [appEnd, setAppEnd] = useState('');
+  const [selectedEmployee, setSelectedEmployee] = useState('');
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -91,19 +92,22 @@ function Calendar() {
           Next
         </button>
       </div>
-      <AppointmentModal services={services.map((s) => {
-        return {
-          label: s.name,
-          value: s.id,
-        }
-      })}
-      isModalOpen={isModalOpen}
-      start={appStart}
-      end={appEnd}
-      onClose={() => {
-        setIsModalOpen(false);
-      }}
-      />
+      { isModalOpen ?
+          <AppointmentModal services={services.map((s) => {
+            return {
+              label: s.name,
+              value: s.id,
+            }
+          })}
+          isModalOpen={isModalOpen}
+          start={appStart}
+          end={appEnd}
+          onClose={() => {
+            setIsModalOpen(false);
+          }}
+          employee={selectedEmployee}
+          />
+      : null }
       <div id="calendar-container">
         <div id="navigator">
           <DayPilotNavigator
@@ -141,6 +145,7 @@ function Calendar() {
               setIsModalOpen(true)
               setAppStart(args.start.value)
               setAppEnd(args.end.value)
+              setSelectedEmployee(args.resource)
             }}
           />
         </div>
