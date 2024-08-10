@@ -18,6 +18,7 @@ function Calendar() {
   const [appEnd, setAppEnd] = useState('');
   const [selectedEmployee, setSelectedEmployee] = useState('');
 
+  // gets all services
   useEffect(() => {
     const fetchServices = async () => {
       try {

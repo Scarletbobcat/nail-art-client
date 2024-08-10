@@ -28,35 +28,35 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
         })
 
         setFormData({...formData, services: newServices});
-        console.log(formData);
     }
 
     function changeName(inputName) {
         const newName = inputName;
         setFormData({...formData, name: newName});
-        console.log(formData);
     }
 
     function changePhoneNumber(inputPhoneNumber) {
         const newPN = inputPhoneNumber;
         setFormData({...formData, phoneNumber: newPN});
-        console.log(formData);
     }
 
-    // async function createAppointment(appointment) {
-    //     console.log(appointment);
-    //     try {
-    //         const response = await fetch("http://localhost:8080/Appointments/Create", {
-    //             method: "POST",
-    //             body: appointment,
-    //         })
-    //         if (!response.ok) {
-    //             throw new Error("Network error has occurred");
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
+    const createAppointment = async (appointment) => {
+        console.log(appointment);
+        try {
+            const response = await fetch("http://localhost:8080/Appointments/Create", {
+                method: "POST",
+                body: JSON.stringify(appointment),
+                headers: {
+                    'Content-Type': 'application/json' // Indicate that the request body is JSON
+                  },
+            })
+            if (!response.ok) {
+                throw new Error("Network error has occurred");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <>
@@ -113,8 +113,10 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
                         <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={onClose}
-                        >
+                            onClick={() =>  {
+                                createAppointment(formData);
+                                onclose();
+                            }}>
                             Save Changes
                         </button>
                         </div>
