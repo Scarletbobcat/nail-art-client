@@ -26,7 +26,6 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
       services: [],  
     })
 
-    console.log(errors);
     useEffect(() => {
         setErrors([]);
         setShowBanner(false);
@@ -34,11 +33,15 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
 
     function validateData(formData) {
         const newErrors = [];
+        const regex = /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
         if (formData.name === "") {
             newErrors.push("Please enter a name.")
         }
         if (formData.phoneNumber === "") {
             newErrors.push("Please enter a phone number.")
+        }
+        if (!regex.test(formData.phoneNumber)) {
+            newErrors.push("Please enter a valid phone number.");
         }
         if (formData.services.length === 0) {
             newErrors.push("Please select at least one service.")
@@ -139,6 +142,7 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
                                 className="text-black w-full" required/>
                                 <label>Phone Number</label>
                                 <input id="phoneNumber" onChange={(e) => {
+                                    e.preventDefault();
                                     changePhoneNumber(e.target.value)
                                 }} className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>
                                 <p>Start time</p>

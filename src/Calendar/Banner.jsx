@@ -14,9 +14,7 @@ export default function Banner({ color, errors, closeBanner }) {
         <div className="flex flex-col">
           { errors.map((e, index) => {
               return (
-                <>
                   <p key={index} className="text-base flex-1 max-md:text-center">{e}</p>
-                </>
               )
             })
           }
