@@ -20,7 +20,7 @@ export default function Banner({ color, errors, closeBanner }) {
           }
         </div>
 
-        <div>
+        <div className="flex justify-center">
           <button onClick={closeBanner}>
             <svg xmlns="http://www.w3.org/2000/svg"
             className="w-3.5 cursor-pointer fill-white inline-block ml-4" viewBox="0 0 320.591 320.591">
