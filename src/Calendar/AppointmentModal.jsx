@@ -115,7 +115,7 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
                             type="button"
                             onClick={() =>  {
                                 createAppointment(formData);
-                                onclose();
+                                onClose();
                             }}>
                             Save Changes
                         </button>

@@ -127,7 +127,6 @@ function Calendar() {
             startDate={startDate}
             events={events.map((e, index) => {
               let services = "";
-              console.log(e.services);
               e.services.forEach(s => {
                 services = services + s + "\n";
               })
