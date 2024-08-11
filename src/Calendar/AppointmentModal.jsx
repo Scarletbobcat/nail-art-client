@@ -39,8 +39,7 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
         }
         if (formData.phoneNumber === "") {
             newErrors.push("Please enter a phone number.")
-        }
-        if (!regex.test(formData.phoneNumber)) {
+        } else if (!regex.test(formData.phoneNumber)) {
             newErrors.push("Please enter a valid phone number.");
         }
         if (formData.services.length === 0) {
