@@ -67,14 +67,19 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
     function changePhoneNumber(inputPhoneNumber) {
         const regex = /^\d{0,3}[\s-]?\d{0,3}[\s-]?\d{0,4}$/;
         if (regex.test(inputPhoneNumber)) {
-            const newPN = inputPhoneNumber;
+            var newPN = inputPhoneNumber;
+            // conditionally adds hyphen when needed
+            if (newPN.length === 3 && phoneNumber.length === 2|| newPN.length === 7 && phoneNumber.length === 6) {
+                newPN += "-";
+            }
             setFormData({...formData, phoneNumber: newPN});
             setPhoneNumber(newPN);
         }
     }
 
     const createAppointment = async (appointment) => {
-        console.log(appointment);
+        appointment.phoneNumber = appointment.phoneNumber.replace(' ', '');
+        appointment.phoneNumber = appointment.phoneNumber.replace('-', '');
         try {
             const response = await fetch("http://localhost:8080/Appointments/Create", {
                 method: "POST",
