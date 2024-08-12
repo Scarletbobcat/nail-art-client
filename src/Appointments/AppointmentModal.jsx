@@ -78,8 +78,6 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
     }
 
     const createAppointment = async (appointment) => {
-        appointment.phoneNumber = appointment.phoneNumber.replace(' ', '');
-        appointment.phoneNumber = appointment.phoneNumber.replace('-', '');
         try {
             const response = await fetch("http://localhost:8080/Appointments/Create", {
                 method: "POST",
