@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   const navItems = [
-    {title: "Appointments", url: "/Calendar"},
+    {title: "Appointments", url: "/Appointments"},
     {title: "Employees", url: "/Employees"},
     {title: "Services", url: "/Services"},
   ]
