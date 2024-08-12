@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import "./Calendar.css";
+import "./Appointments.css";
 import {
   DayPilotCalendar,
   DayPilot,
