@@ -16,6 +16,7 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
     const [showBanner, setShowBanner] = useState(false);
     const [bannerColor, setBannerColor] = useState('');
     const [errors, setErrors] = useState([]);
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [formData, setFormData] = useState({
       name: "",
       phoneNumber: "",
@@ -64,8 +65,12 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
     }
 
     function changePhoneNumber(inputPhoneNumber) {
-        const newPN = inputPhoneNumber;
-        setFormData({...formData, phoneNumber: newPN});
+        const regex = /^\d{0,3}[\s-]?\d{0,3}[\s-]?\d{0,4}$/;
+        if (regex.test(inputPhoneNumber)) {
+            const newPN = inputPhoneNumber;
+            setFormData({...formData, phoneNumber: newPN});
+            setPhoneNumber(newPN);
+        }
     }
 
     const createAppointment = async (appointment) => {
@@ -140,7 +145,9 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
                                     onChange={changeServices}
                                 className="text-black w-full" required/>
                                 <label>Phone Number</label>
-                                <input id="phoneNumber" onChange={(e) => {
+                                <input id="phoneNumber" 
+                                value={phoneNumber}
+                                onChange={(e) => {
                                     e.preventDefault();
                                     changePhoneNumber(e.target.value)
                                 }} className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>
