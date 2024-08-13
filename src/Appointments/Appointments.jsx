@@ -16,7 +16,7 @@ function Calendar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [appStart, setAppStart] = useState('');
   const [appEnd, setAppEnd] = useState('');
-  const [selectedEmployee, setSelectedEmployee] = useState('');
+  const [selectedEmployee, setSelectedEmployee] = useState();
 
   var today = new Date(startDate.toString());
 
@@ -115,7 +115,8 @@ function Calendar() {
           onClose={() => {
             setIsModalOpen(false);
           }}
-          employee={selectedEmployee}
+          employeeId={selectedEmployee}
+          employeeName={employees.find((employee) => employee.id == selectedEmployee).name}
           />
       : null }
       <div id="calendar-container">

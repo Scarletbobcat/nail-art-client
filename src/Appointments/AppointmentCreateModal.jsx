@@ -9,10 +9,11 @@ AppointmentCreateModal.propTypes = {
     onClose: PropTypes.func,
     start: PropTypes.string,
     end: PropTypes.string,
-    employee: PropTypes.number,
+    employeeId: PropTypes.number,
+    employeeName: PropTypes.string,
 }
 
-function AppointmentCreateModal({ services, isModalOpen, onClose, start, end, employee }) {
+function AppointmentCreateModal({ services, isModalOpen, onClose, start, end, employeeId, employeeName }) {
     const [showBanner, setShowBanner] = useState(false);
     const [bannerColor, setBannerColor] = useState('');
     const [errors, setErrors] = useState([]);
@@ -23,7 +24,7 @@ function AppointmentCreateModal({ services, isModalOpen, onClose, start, end, em
       startTime: start.substring(10),
       endTime: end.substring(10),
       date: start.substring(0,10),
-      employeeId: employee,
+      employeeId: employeeId,
       services: [],  
     })
 
@@ -160,6 +161,8 @@ function AppointmentCreateModal({ services, isModalOpen, onClose, start, end, em
                                 <p>{startTime.toLocaleTimeString("en-us")}</p>
                                 <p>End time</p>
                                 <p>{endTime.toLocaleTimeString("en-us")}</p>
+                                <p>Employee</p>
+                                <p>{employeeName}</p>
                             </div>
                             {/*footer*/}
                             <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
