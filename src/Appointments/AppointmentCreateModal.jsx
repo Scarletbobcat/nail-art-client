@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Banner from './Banner.jsx';
 
-AppointmentModal.propTypes = {
+AppointmentCreateModal.propTypes = {
     services: PropTypes.array,
     isModalOpen: PropTypes.bool,
     onClose: PropTypes.func,
@@ -12,7 +12,7 @@ AppointmentModal.propTypes = {
     employee: PropTypes.number,
 }
 
-function AppointmentModal({ services, isModalOpen, onClose, start, end, employee }) {
+function AppointmentCreateModal({ services, isModalOpen, onClose, start, end, employee }) {
     const [showBanner, setShowBanner] = useState(false);
     const [bannerColor, setBannerColor] = useState('');
     const [errors, setErrors] = useState([]);
@@ -68,7 +68,7 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
         const regex = /^\d{0,3}[\s-]?\d{0,3}[\s-]?\d{0,4}$/;
         if (regex.test(inputPhoneNumber)) {
             var newPN = inputPhoneNumber;
-            // conditionally adds hyphen when needed
+            // conditionally adds hyphen only when adding to phone number, not deleting
             if (newPN.length === 3 && phoneNumber.length === 2|| newPN.length === 7 && phoneNumber.length === 6) {
                 newPN += "-";
             }
@@ -96,14 +96,13 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
 
     const handleSaveChanges = async () => {
         const isValid = validateData(formData);
-        console.log(isValid);
 
         if (isValid) {
             try {
                 await createAppointment(formData);
                 onClose(); // Close the modal if the appointment is created successfully
             } catch (error) {
-                console.log(error);
+                alert(error);
                 // Handle error if needed
             }
         } else {
@@ -187,4 +186,4 @@ function AppointmentModal({ services, isModalOpen, onClose, start, end, employee
 
 
 
-export default AppointmentModal;
+export default AppointmentCreateModal;

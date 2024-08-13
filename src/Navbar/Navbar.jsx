@@ -16,7 +16,7 @@ function Navbar() {
               </div>
               <ul className="flex gap-8 md:gap-16 items-center justify-center text-center cursor-pointer">
                   {navItems.map((link, index) => (
-                    <li key={index} className="text-sm"><Link to={link.url}>{link.title}</Link></li>
+                    <li key={index} className="text-sm py-2"><Link to={link.url}>{link.title}</Link></li>
                   ))}
               </ul>
           </div>

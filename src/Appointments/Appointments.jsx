@@ -5,7 +5,7 @@ import {
   DayPilot,
   DayPilotNavigator,
 } from "@daypilot/daypilot-lite-react";
-import AppointmentModal from "./AppointmentModal";
+import AppointmentCreateModal from "./AppointmentCreateModal";
 
 function Calendar() {
   const calendarRef = useRef(null);
@@ -17,6 +17,8 @@ function Calendar() {
   const [appStart, setAppStart] = useState('');
   const [appEnd, setAppEnd] = useState('');
   const [selectedEmployee, setSelectedEmployee] = useState('');
+
+  var today = new Date(startDate.toString());
 
   // gets all services
   useEffect(() => {
@@ -76,25 +78,32 @@ function Calendar() {
 
   return (
     <>
-      <div id="header">
-        <b>Day: </b>
-        <button
-          onClick={() => {
-            setStartDate(startDate.addDays(-1));
-          }}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => {
-            setStartDate(startDate.addDays(1));
-          }}
-        >
-          Next
-        </button>
+      <div id="header" className="flex justify-center m-2 border-2 rounded-lg">
+        <div id="current-day" className="mx-2 p-2 content-center">
+          <p>
+            {"Date: " + today.toDateString()}
+          </p>
+        </div>
+        <div id="daySelector">
+          <button className="size-11 mx-2 p-2 rounded-full active:bg-slate-100"
+            onClick={() => {
+              setStartDate(startDate.addDays(-1));
+            }}
+          >
+            &#10229;
+          </button>
+          <b className="p-2 content-center">Day</b>
+          <button className="size-11 mx-2 p-2 rounded-full active:bg-slate-100"
+            onClick={() => {
+              setStartDate(startDate.addDays(1));
+            }}
+          >
+            &#10230;
+          </button>
+        </div>
       </div>
       { isModalOpen ?
-          <AppointmentModal services={services.map((s) => {
+          <AppointmentCreateModal services={services.map((s) => {
             return {
               label: s.name,
               value: s.id,
@@ -114,7 +123,6 @@ function Calendar() {
           <DayPilotNavigator
             selectMode={"Day"}
             showMonths={1}
-            skipMonths={3}
             selectionDay={startDate}
             startDate={startDate}
             onTimeRangeSelected={(args) => setStartDate(args.day)}
@@ -147,6 +155,8 @@ function Calendar() {
               setAppEnd(args.end.value)
               setSelectedEmployee(args.resource)
             }}
+            businessBeginsHour={10}
+            businessEndsHour={19}
           />
         </div>
       </div>
