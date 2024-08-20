@@ -78,6 +78,8 @@ function AppointmentCreateModal({ services, isModalOpen, onClose, start, end, em
             }
             setFormData({...formData, phoneNumber: newPN});
             setPhoneNumber(newPN);
+        } else {
+            console.log("Phone number does not match regex");
         }
     }
 

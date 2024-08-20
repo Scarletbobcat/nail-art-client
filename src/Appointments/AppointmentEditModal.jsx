@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Banner from "./Banner.jsx";
+import Select from 'react-select'
 
 AppointmentEditModal.propTypes = {
   services: PropTypes.array,
@@ -27,6 +28,7 @@ export default function AppointmentEditModal({  services,
                                                 end }) {
 
   const [showBanner, setShowBanner] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [formData, setFormData] = useState({
     id: appointmentId,
     name: inputName,
@@ -38,7 +40,25 @@ export default function AppointmentEditModal({  services,
     services: services,
   })
 
-  console.log(formData);
+  function changeName (name) {
+    const newName = name;
+    setFormData({...formData, name: newName})
+  }
+
+  function changePhoneNumber(inputPhoneNumber) {
+    const regex = /^\d{0,3}[\s-]?\d{0,3}[\s-]?\d{0,4}$/;
+    if (regex.test(inputPhoneNumber)) {
+        var newPN = inputPhoneNumber;
+        // conditionally adds hyphen only when adding to phone number, not deleting
+        if (newPN.length === 3 && phoneNumber.length === 2|| newPN.length === 7 && phoneNumber.length === 6) {
+            newPN += "-";
+        }
+        setFormData({...formData, phoneNumber: newPN});
+        setPhoneNumber(newPN);
+    } else {
+        console.log("Phone number does not match regex");
+    }
+  }
 
   return (
     <>
@@ -71,20 +91,21 @@ export default function AppointmentEditModal({  services,
                             <input id="name" 
                               value={inputName}
                               onChange={(e) => {
-                                  // changeName(e.target.value)
+                                  changeName(e.target.value)
                               }} className="border-2 w-full ps-2 rounded" required placeholder="Tien"
                             />
                             <label>Services</label>
-                            {/* <Select id="services" isMulti options={services}
-                                onChange={changeServices}
-                            className="text-black w-full" required/> */}
+                            <Select id="services" isMulti options={services}
+                                // onChange={changeServices}
+                            className="text-black w-full" required/>
                             <label>Phone Number</label>
-                            {/* <input id="phoneNumber" 
+                            <input id="phoneNumber" 
                             value={inputPhoneNumber}
                             onChange={(e) => {
-                                e.preventDefault();
+                                // e.preventDefault();
                                 changePhoneNumber(e.target.value)
-                            }} className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/> */}
+                            }} 
+                            className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>
                             {/* <p>Start time</p>
                             <p>{startTime.toLocaleTimeString("en-us")}</p>
                             <p>End time</p>

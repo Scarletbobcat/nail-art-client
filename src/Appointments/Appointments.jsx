@@ -20,6 +20,7 @@ function Calendar() {
   const [appEnd, setAppEnd] = useState('');
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [selectedPhoneNumber, setSelectedPhoneNumber] = useState('');
 
   var today = new Date(startDate.toString());
   useEffect(() => {
@@ -146,6 +147,7 @@ function Calendar() {
           start={appStart}
           end={appEnd}
           inputName={events.find(event => event.id === selectedAppointment)?.name || 'Unknown'}
+          inputPhoneNumber={selectedPhoneNumber}
         />
       ) : null}
       <div id="calendar-container">
@@ -189,11 +191,14 @@ function Calendar() {
             onEventClick={(args) => {
               const eventId = args.e.id();
               const employeeId = args.e.resource();
+              const phoneNumber = args.e.data.text.split('\n').at(-1);
+              console.log(phoneNumber);
               setIsEditModalOpen(true)
               setAppStart(args.e.start().toString())
               setAppEnd(args.e.end().toString())
               setSelectedEmployee(employeeId)
               setSelectedAppointment(eventId)
+              setSelectedPhoneNumber(phoneNumber);
             }}
             businessBeginsHour={10}
             businessEndsHour={19}
