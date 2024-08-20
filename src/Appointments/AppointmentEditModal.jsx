@@ -38,6 +38,7 @@ export default function AppointmentEditModal({  services,
     services: services,
   })
 
+  console.log(formData);
 
   return (
     <>

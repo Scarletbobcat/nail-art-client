@@ -18,8 +18,8 @@ function Calendar() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [appStart, setAppStart] = useState('');
   const [appEnd, setAppEnd] = useState('');
-  const [selectedEmployee, setSelectedEmployee] = useState('');
-  const [selectedAppointment, setSelectedAppointment] = useState('');
+  const [selectedEmployee, setSelectedEmployee] = useState();
+  const [selectedAppointment, setSelectedAppointment] = useState();
 
   var today = new Date(startDate.toString());
   useEffect(() => {
@@ -187,13 +187,11 @@ function Calendar() {
               setSelectedEmployee(args.resource)
             }}
             onEventClick={(args) => {
-              if (args.e){
-                setIsEditModalOpen(true)
-                setSelectedEmployee(args.e.resource)
-                setSelectedAppointment(args.e.id())
-              } else {
-                console.log("EVENT DATA IS NOT AVAILABLE")
-              }
+              setIsEditModalOpen(true)
+              setAppStart(args.start.value)
+              setAppEnd(args.end.value)
+              setSelectedEmployee(args.resource)
+              setSelectedAppointment(args.e.id())
             }}
             businessBeginsHour={10}
             businessEndsHour={19}
