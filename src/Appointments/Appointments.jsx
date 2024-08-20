@@ -134,6 +134,7 @@ function Calendar() {
             viewType="Resources"
             columns={employees}
             startDate={startDate}
+            eventMoveHandling="Disabled"
             events={events.map((e, index) => {
               let services = "";
               e.services.forEach(s => {
