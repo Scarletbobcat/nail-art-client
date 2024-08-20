@@ -18,7 +18,7 @@ function Calendar() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [appStart, setAppStart] = useState('');
   const [appEnd, setAppEnd] = useState('');
-  const [selectedEmployee, setSelectedEmployee] = useState();
+  const [selectedEmployee, setSelectedEmployee] = useState('');
   const [selectedAppointment, setSelectedAppointment] = useState('');
 
   var today = new Date(startDate.toString());
