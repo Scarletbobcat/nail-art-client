@@ -6,6 +6,7 @@ import {
   DayPilotNavigator,
 } from "@daypilot/daypilot-lite-react";
 import AppointmentCreateModal from "./AppointmentCreateModal";
+import AppointmentEditModal from "./AppointmentEditModal";
 
 function Calendar() {
   const calendarRef = useRef(null);
@@ -13,12 +14,27 @@ function Calendar() {
   const [employees, setEmployees] = useState([]);
   const [services, setServices] = useState([]);
   const [startDate, setStartDate] = useState(DayPilot.Date.today());
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [appStart, setAppStart] = useState('');
   const [appEnd, setAppEnd] = useState('');
   const [selectedEmployee, setSelectedEmployee] = useState();
+  const [selectedAppointment, setSelectedAppointment] = useState('');
 
   var today = new Date(startDate.toString());
+  useEffect(() => {
+    console.log('events:', events);
+  }, [events])
+  useEffect(() => {
+    console.log('employees:', employees);
+  }, [employees])
+  useEffect(() => {
+    console.log('selectedAppointment:', selectedAppointment);
+  }, [selectedAppointment])
+  useEffect(() => {
+    console.log('selectedEmployee:', selectedEmployee);
+  }, [selectedEmployee])
+  
 
   // gets all services
   useEffect(() => {
@@ -102,23 +118,36 @@ function Calendar() {
           </button>
         </div>
       </div>
-      { isModalOpen ?
+      { isCreateModalOpen ?
           <AppointmentCreateModal services={services.map((s) => {
             return {
               label: s.name,
               value: s.id,
             }
           })}
-          isModalOpen={isModalOpen}
+          isModalOpen={isCreateModalOpen}
           start={appStart}
           end={appEnd}
           onClose={() => {
-            setIsModalOpen(false);
+            setIsCreateModalOpen(false);
           }}
           employeeId={selectedEmployee}
           employeeName={employees.find((employee) => employee.id == selectedEmployee).name}
           />
       : null }
+      {isEditModalOpen && (
+        <AppointmentEditModal 
+          services={services.map(s => ({ label: s.name, value: s.id }))}
+          isModalOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          appointmentId={selectedAppointment}
+          employeeId={selectedEmployee}
+          employeeName={employees.find(employee => employee.id === selectedEmployee)?.name || 'Unknown'}
+          start={appStart}
+          end={appEnd}
+          inputName={events.find(event => event.id === selectedAppointment)?.name || 'Unknown'}
+        />
+      )}
       <div id="calendar-container">
         <div id="navigator">
           <DayPilotNavigator
@@ -135,13 +164,13 @@ function Calendar() {
             columns={employees}
             startDate={startDate}
             eventMoveHandling="Disabled"
-            events={events.map((e, index) => {
+            events={events.map((e) => {
               let services = "";
               e.services.forEach(s => {
                 services = services + s + "\n";
               })
               return {
-                id: index,
+                id: e.id,
                 resource: e.employeeId,
                 start: e.date + e.startTime,
                 end: e.date + e.endTime,
@@ -152,10 +181,19 @@ function Calendar() {
             })}
             ref={calendarRef}
             onTimeRangeSelected={(args) => {
-              setIsModalOpen(true)
+              setIsCreateModalOpen(true)
               setAppStart(args.start.value)
               setAppEnd(args.end.value)
               setSelectedEmployee(args.resource)
+            }}
+            onEventClick={(args) => {
+              if (args.e){
+                setIsEditModalOpen(true)
+                setSelectedEmployee(args.e.resource)
+                setSelectedAppointment(args.e.id())
+              } else {
+                console.log("EVENT DATA IS NOT AVAILABLE")
+              }
             }}
             businessBeginsHour={10}
             businessEndsHour={19}

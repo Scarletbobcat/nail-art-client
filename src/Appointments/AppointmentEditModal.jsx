@@ -1,14 +1,43 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import Banner from "./Banner.jsx";
 
 AppointmentEditModal.propTypes = {
+  services: PropTypes.array,
   appointmentId: PropTypes.number,
   isModalOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  employeeId: PropTypes.number,
+  employeeName: PropTypes.string,
+  inputName: PropTypes.string,
+  start: PropTypes.string,
+  end: PropTypes.string,
+  inputPhoneNumber: PropTypes.string
 }
 
-export default function AppointmentEditModal({ appointmentId, isModalOpen }) {
+export default function AppointmentEditModal({  services, 
+                                                appointmentId, 
+                                                isModalOpen, 
+                                                onClose, 
+                                                employeeId, 
+                                                employeeName, 
+                                                inputName, 
+                                                inputPhoneNumber,
+                                                start, 
+                                                end }) {
 
   const [showBanner, setShowBanner] = useState(false);
+  const [formData, setFormData] = useState({
+    id: appointmentId,
+    name: inputName,
+    phoneNumber: inputPhoneNumber,
+    startTime: start.substring(10),
+    endTime: end.substring(10),
+    date: start.substring(0,10),
+    employeeId: employeeId,
+    services: services,
+  })
+
 
   return (
     <>
@@ -18,13 +47,13 @@ export default function AppointmentEditModal({ appointmentId, isModalOpen }) {
                     className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
                     <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                        {showBanner ? <Banner color={bannerColor} errors={errors} closeBanner={() => setShowBanner(false)} /> : null}
+                        {/* {showBanner ? <Banner color={bannerColor} errors={errors} closeBanner={() => setShowBanner(false)} /> : null} */}
                     {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         {/*header*/}
                         <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                         <h3 className="text-3xl font-semibold text-black">
-                            Create an Appointment
+                            Edit an Appointment
                         </h3>
                         <button
                             className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -38,24 +67,27 @@ export default function AppointmentEditModal({ appointmentId, isModalOpen }) {
                         {/*body*/}
                         <div className="grid grid-cols-2 p-6 gap-6 place-items-center">
                             <label>Name</label>
-                            <input id="name" onChange={(e) => {
-                                changeName(e.target.value)
-                            }} className="border-2 w-full ps-2 rounded" required placeholder="Tien"/>
+                            <input id="name" 
+                              value={inputName}
+                              onChange={(e) => {
+                                  // changeName(e.target.value)
+                              }} className="border-2 w-full ps-2 rounded" required placeholder="Tien"
+                            />
                             <label>Services</label>
-                            <Select id="services" isMulti options={services}
+                            {/* <Select id="services" isMulti options={services}
                                 onChange={changeServices}
-                            className="text-black w-full" required/>
+                            className="text-black w-full" required/> */}
                             <label>Phone Number</label>
-                            <input id="phoneNumber" 
-                            value={phoneNumber}
+                            {/* <input id="phoneNumber" 
+                            value={inputPhoneNumber}
                             onChange={(e) => {
                                 e.preventDefault();
                                 changePhoneNumber(e.target.value)
-                            }} className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>
-                            <p>Start time</p>
+                            }} className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/> */}
+                            {/* <p>Start time</p>
                             <p>{startTime.toLocaleTimeString("en-us")}</p>
                             <p>End time</p>
-                            <p>{endTime.toLocaleTimeString("en-us")}</p>
+                            <p>{endTime.toLocaleTimeString("en-us")}</p> */}
                             <p>Employee</p>
                             <p>{employeeName}</p>
                         </div>
@@ -71,7 +103,8 @@ export default function AppointmentEditModal({ appointmentId, isModalOpen }) {
                         <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={handleSaveChanges}>
+                            // onClick={handleSaveChanges}
+                          >
                             Save Changes
                         </button>
                         </div>
