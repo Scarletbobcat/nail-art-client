@@ -18,8 +18,8 @@ function Calendar() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [appStart, setAppStart] = useState('');
   const [appEnd, setAppEnd] = useState('');
-  const [selectedEmployee, setSelectedEmployee] = useState();
-  const [selectedAppointment, setSelectedAppointment] = useState();
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   var today = new Date(startDate.toString());
   useEffect(() => {
@@ -135,7 +135,7 @@ function Calendar() {
           employeeName={employees.find((employee) => employee.id == selectedEmployee).name}
           />
       : null }
-      {isEditModalOpen && (
+      {isEditModalOpen ? (
         <AppointmentEditModal 
           services={services.map(s => ({ label: s.name, value: s.id }))}
           isModalOpen={isEditModalOpen}
@@ -147,7 +147,7 @@ function Calendar() {
           end={appEnd}
           inputName={events.find(event => event.id === selectedAppointment)?.name || 'Unknown'}
         />
-      )}
+      ) : null}
       <div id="calendar-container">
         <div id="navigator">
           <DayPilotNavigator
@@ -187,11 +187,13 @@ function Calendar() {
               setSelectedEmployee(args.resource)
             }}
             onEventClick={(args) => {
+              const eventId = args.e.id();
+              const employeeId = args.e.resource();
               setIsEditModalOpen(true)
-              setAppStart(args.start.value)
-              setAppEnd(args.end.value)
-              setSelectedEmployee(args.resource)
-              setSelectedAppointment(args.e.id())
+              setAppStart(args.e.start().toString())
+              setAppEnd(args.e.end().toString())
+              setSelectedEmployee(employeeId)
+              setSelectedAppointment(eventId)
             }}
             businessBeginsHour={10}
             businessEndsHour={19}
