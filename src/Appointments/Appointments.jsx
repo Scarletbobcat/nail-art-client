@@ -24,19 +24,6 @@ function Calendar() {
   const [selectedServices, setSelectedServices] = useState([]);
 
   var today = new Date(startDate.toString());
-  useEffect(() => {
-    console.log('events:', events);
-  }, [events])
-  useEffect(() => {
-    console.log('employees:', employees);
-  }, [employees])
-  useEffect(() => {
-    console.log('selectedAppointment:', selectedAppointment);
-  }, [selectedAppointment])
-  useEffect(() => {
-    console.log('selectedEmployee:', selectedEmployee);
-  }, [selectedEmployee])
-  
 
   // gets all services
   useEffect(() => {
@@ -49,7 +36,7 @@ function Calendar() {
         const data = await response.json();
         setServices(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -67,7 +54,7 @@ function Calendar() {
         const data = await response.json();
         setEmployees(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -88,7 +75,7 @@ function Calendar() {
         const data = await response.json();
         setEvents(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchAppointments();
@@ -196,7 +183,6 @@ function Calendar() {
               const text = args.e.data.text.split('\n');
               const phoneNumber = text.at(-1);
               const tempServices = text.slice(1, text.length - 1).map(s => ({ label: s, value: services.find(service => service.name == s).id }));
-              console.log(tempServices);
               setIsEditModalOpen(true)
               setAppStart(args.e.start().toString())
               setAppEnd(args.e.end().toString())

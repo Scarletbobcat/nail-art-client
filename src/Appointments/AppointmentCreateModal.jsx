@@ -79,7 +79,7 @@ function AppointmentCreateModal({ services, isModalOpen, onClose, start, end, em
             setFormData({...formData, phoneNumber: newPN});
             setPhoneNumber(newPN);
         } else {
-            console.log("Phone number does not match regex");
+            console.error("Phone number does not match regex");
         }
     }
 
@@ -96,25 +96,25 @@ function AppointmentCreateModal({ services, isModalOpen, onClose, start, end, em
                 throw new Error("Network error has occurred");
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
     const handleSaveChanges = async () => {
-        const isValid = validateData(formData);
+      const isValid = validateData(formData);
 
-        if (isValid) {
-            try {
-                await createAppointment(formData);
-                onClose(); // Close the modal if the appointment is created successfully
-            } catch (error) {
-                alert(error);
-                // Handle error if needed
-            }
-        } else {
-            setBannerColor('bg-red-500');
-            setShowBanner(true);
-        }
+      if (isValid) {
+          try {
+              await createAppointment(formData);
+              onClose(); // Close the modal if the appointment is created successfully
+          } catch (error) {
+              alert(error);
+              // Handle error if needed
+          }
+      } else {
+          setBannerColor('bg-red-500');
+          setShowBanner(true);
+      }
     }
 
     return (
