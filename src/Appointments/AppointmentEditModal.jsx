@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import Banner from "./Banner.jsx";
+// import Banner from "./Banner.jsx";
 import Select from 'react-select'
 
 AppointmentEditModal.propTypes = {
@@ -29,7 +29,7 @@ export default function AppointmentEditModal({  selectedServices,
                                                 start, 
                                                 end }) {
 
-  const [showBanner, setShowBanner] = useState(false);
+  // const [showBanner, setShowBanner] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [formData, setFormData] = useState({
     id: appointmentId,
