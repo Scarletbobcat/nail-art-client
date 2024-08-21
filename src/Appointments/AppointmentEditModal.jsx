@@ -4,7 +4,8 @@ import Banner from "./Banner.jsx";
 import Select from 'react-select'
 
 AppointmentEditModal.propTypes = {
-  services: PropTypes.array,
+  selectedServices: PropTypes.array,
+  allServices: PropTypes.array,
   appointmentId: PropTypes.number,
   isModalOpen: PropTypes.bool,
   onClose: PropTypes.func,
@@ -16,7 +17,8 @@ AppointmentEditModal.propTypes = {
   inputPhoneNumber: PropTypes.string
 }
 
-export default function AppointmentEditModal({  services, 
+export default function AppointmentEditModal({  selectedServices,
+                                                allServices, 
                                                 appointmentId, 
                                                 isModalOpen, 
                                                 onClose, 
@@ -37,7 +39,7 @@ export default function AppointmentEditModal({  services,
     endTime: end.substring(10),
     date: start.substring(0,10),
     employeeId: employeeId,
-    services: services,
+    services: allServices,
   })
 
   function changeName (name) {
@@ -95,7 +97,8 @@ export default function AppointmentEditModal({  services,
                               }} className="border-2 w-full ps-2 rounded" required placeholder="Tien"
                             />
                             <label>Services</label>
-                            <Select id="services" isMulti options={services}
+                            <Select id="services" isMulti options={allServices}
+                            value={selectedServices}
                                 // onChange={changeServices}
                             className="text-black w-full" required/>
                             <label>Phone Number</label>
