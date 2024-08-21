@@ -58,7 +58,7 @@ export default function AppointmentEditModal({  selectedServices,
         setFormData({...formData, phoneNumber: newPN});
         setPhoneNumber(newPN);
     } else {
-        console.log("Phone number does not match regex");
+        console.error("Phone number does not match regex");
     }
   }
 
@@ -91,7 +91,7 @@ export default function AppointmentEditModal({  selectedServices,
                         <div className="grid grid-cols-2 p-6 gap-6 place-items-center">
                             <label>Name</label>
                             <input id="name" 
-                              value={inputName}
+                              value={formData.name}
                               onChange={(e) => {
                                   changeName(e.target.value)
                               }} className="border-2 w-full ps-2 rounded" required placeholder="Tien"
@@ -103,7 +103,7 @@ export default function AppointmentEditModal({  selectedServices,
                             className="text-black w-full" required/>
                             <label>Phone Number</label>
                             <input id="phoneNumber" 
-                            value={inputPhoneNumber}
+                            value={formData.phoneNumber}
                             onChange={(e) => {
                                 // e.preventDefault();
                                 changePhoneNumber(e.target.value)
@@ -129,6 +129,7 @@ export default function AppointmentEditModal({  selectedServices,
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
                             // onClick={handleSaveChanges}
+                            onClick={onClose}
                           >
                             Save Changes
                         </button>
