@@ -16,11 +16,11 @@ function Calendar() {
   const [startDate, setStartDate] = useState(DayPilot.Date.today());
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [appStart, setAppStart] = useState('');
-  const [appEnd, setAppEnd] = useState('');
+  const [appStart, setAppStart] = useState("");
+  const [appEnd, setAppEnd] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-  const [selectedPhoneNumber, setSelectedPhoneNumber] = useState('');
+  const [selectedPhoneNumber, setSelectedPhoneNumber] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
 
   var today = new Date(startDate.toString());
@@ -85,12 +85,11 @@ function Calendar() {
     <>
       <div id="header" className="flex justify-center m-2 border-2 rounded-lg">
         <div id="current-day" className="mx-2 p-2 content-center">
-          <p>
-            {"Date: " + today.toDateString()}
-          </p>
+          <p>{"Date: " + today.toDateString()}</p>
         </div>
         <div id="daySelector">
-          <button className="size-11 mx-2 p-2 rounded-full active:bg-slate-100"
+          <button
+            className="size-11 mx-2 p-2 rounded-full active:bg-slate-100"
             onClick={() => {
               setStartDate(startDate.addDays(-1));
             }}
@@ -98,7 +97,8 @@ function Calendar() {
             &#10229;
           </button>
           <b className="p-2 content-center">Day</b>
-          <button className="size-11 mx-2 p-2 rounded-full active:bg-slate-100"
+          <button
+            className="size-11 mx-2 p-2 rounded-full active:bg-slate-100"
             onClick={() => {
               setStartDate(startDate.addDays(1));
             }}
@@ -107,12 +107,13 @@ function Calendar() {
           </button>
         </div>
       </div>
-      { isCreateModalOpen ?
-          <AppointmentCreateModal services={services.map((s) => {
+      {isCreateModalOpen ? (
+        <AppointmentCreateModal
+          services={services.map((s) => {
             return {
               label: s.name,
               value: s.id,
-            }
+            };
           })}
           isModalOpen={isCreateModalOpen}
           start={appStart}
@@ -121,20 +122,28 @@ function Calendar() {
             setIsCreateModalOpen(false);
           }}
           employeeId={selectedEmployee}
-          employeeName={employees.find((employee) => employee.id == selectedEmployee).name}
-          />
-      : null }
+          employeeName={
+            employees.find((employee) => employee.id == selectedEmployee).name
+          }
+        />
+      ) : null}
       {isEditModalOpen ? (
-        <AppointmentEditModal 
-          allServices={services.map(s => ({ label: s.name, value: s.id }))}
+        <AppointmentEditModal
+          allServices={services.map((s) => ({ label: s.name, value: s.id }))}
           isModalOpen={isEditModalOpen}
           onClose={() => setIsEditModalOpen(false)}
           appointmentId={selectedAppointment}
           employeeId={selectedEmployee}
-          employeeName={employees.find(employee => employee.id === selectedEmployee)?.name || 'Unknown'}
+          employeeName={
+            employees.find((employee) => employee.id === selectedEmployee)
+              ?.name || "Unknown"
+          }
           start={appStart}
           end={appEnd}
-          inputName={events.find(event => event.id === selectedAppointment)?.name || 'Unknown'}
+          inputName={
+            events.find((event) => event.id === selectedAppointment)?.name ||
+            "Unknown"
+          }
           inputPhoneNumber={selectedPhoneNumber}
           selectedServices={selectedServices}
         />
@@ -157,38 +166,42 @@ function Calendar() {
             eventMoveHandling="Disabled"
             events={events.map((e) => {
               let services = "";
-              e.services.forEach(s => {
+              e.services.forEach((s) => {
                 services = services + s + "\n";
-              })
+              });
               return {
                 id: e.id,
                 resource: e.employeeId,
                 start: e.date + e.startTime,
                 end: e.date + e.endTime,
                 text: e.name + "\n" + services + e.phoneNumber,
-                barColor: employees.find((employee) => employee.id == e.employeeId)
-                  .color,
+                barColor: employees.find(
+                  (employee) => employee.id == e.employeeId
+                ).color,
               };
             })}
             ref={calendarRef}
             onTimeRangeSelected={(args) => {
-              setIsCreateModalOpen(true)
-              setAppStart(args.start.value)
-              setAppEnd(args.end.value)
-              setSelectedEmployee(args.resource)
+              setIsCreateModalOpen(true);
+              setAppStart(args.start.value);
+              setAppEnd(args.end.value);
+              setSelectedEmployee(args.resource);
             }}
             onEventClick={(args) => {
               const eventId = args.e.id();
               const employeeId = args.e.resource();
-              const text = args.e.data.text.split('\n');
+              const text = args.e.data.text.split("\n");
               const phoneNumber = text.at(-1);
-              const tempServices = text.slice(1, text.length - 1).map(s => ({ label: s, value: services.find(service => service.name == s).id }));
-              setIsEditModalOpen(true)
-              setAppStart(args.e.start().toString())
-              setAppEnd(args.e.end().toString())
+              const tempServices = text.slice(1, text.length - 1).map((s) => ({
+                label: s,
+                value: services.find((service) => service.name == s).id,
+              }));
+              setIsEditModalOpen(true);
+              setAppStart(args.e.start().toString());
+              setAppEnd(args.e.end().toString());
               setSelectedServices(tempServices);
-              setSelectedEmployee(employeeId)
-              setSelectedAppointment(eventId)
+              setSelectedEmployee(employeeId);
+              setSelectedAppointment(eventId);
               setSelectedPhoneNumber(phoneNumber);
             }}
             businessBeginsHour={10}
