@@ -2,6 +2,7 @@ import Select from "react-select";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Banner from "./Banner.jsx";
+import { DateTime } from "luxon";
 
 AppointmentCreateModal.propTypes = {
   services: PropTypes.array,
@@ -36,8 +37,18 @@ function AppointmentCreateModal({
     services: [],
   });
 
-  const startTime = new Date(start.toString());
-  const endTime = new Date(end.toString());
+  const startTime = convertTime(start.substring(11));
+  const endTime = convertTime(end.substring(11));
+
+  function convertTime(time) {
+    // Create a DateTime object using the time string with a dummy date
+    const dateTime = DateTime.fromFormat(time, "HH:mm:ss");
+
+    // Format the DateTime object to "hh:mm a"
+    const formattedTime = dateTime.toFormat("hh:mm a");
+
+    return formattedTime;
+  }
 
   useEffect(() => {
     setErrors([]);
@@ -193,9 +204,9 @@ function AppointmentCreateModal({
                     placeholder="330-423-9103"
                   />
                   <p>Start time</p>
-                  <p>{startTime.toLocaleTimeString("en-us")}</p>
+                  <p>{startTime}</p>
                   <p>End time</p>
-                  <p>{endTime.toLocaleTimeString("en-us")}</p>
+                  <p>{endTime}</p>
                   <p>Employee</p>
                   <p>{employeeName}</p>
                 </div>
