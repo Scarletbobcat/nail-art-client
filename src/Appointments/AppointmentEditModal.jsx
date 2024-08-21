@@ -120,7 +120,6 @@ export default function AppointmentEditModal({  selectedServices,
                             <input id="phoneNumber" 
                             value={formData.phoneNumber}
                             onChange={(e) => {
-                                // e.preventDefault();
                                 changePhoneNumber(e.target.value)
                             }} 
                             className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>

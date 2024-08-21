@@ -156,7 +156,6 @@ function AppointmentCreateModal({ services, isModalOpen, onClose, start, end, em
                                 <input id="phoneNumber" 
                                 value={phoneNumber}
                                 onChange={(e) => {
-                                    e.preventDefault();
                                     changePhoneNumber(e.target.value)
                                 }} className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>
                                 <p>Start time</p>
