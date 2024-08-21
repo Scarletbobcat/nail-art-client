@@ -31,6 +31,7 @@ export default function AppointmentEditModal({  selectedServices,
 
   // const [showBanner, setShowBanner] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
+  
   const [formData, setFormData] = useState({
     id: appointmentId,
     name: inputName,
@@ -41,10 +42,24 @@ export default function AppointmentEditModal({  selectedServices,
     employeeId: employeeId,
     services: allServices,
   })
+  const [startTime, setStartTime] = useState(start.substring(11));
+  const [endTime, setEndTime] = useState(end.substring(11));
 
   function changeName (name) {
     const newName = name;
     setFormData({...formData, name: newName})
+  }
+
+  function changeStartTime(time) {
+    const newTime = time;
+    setStartTime(newTime);
+    setFormData({...formData, startTime: newTime})
+  }
+
+  function changeEndTime(time) {
+    const newTime = time;
+    setEndTime(newTime);
+    setFormData({...formData, endTime: newTime})
   }
 
   function changePhoneNumber(inputPhoneNumber) {
@@ -109,10 +124,10 @@ export default function AppointmentEditModal({  selectedServices,
                                 changePhoneNumber(e.target.value)
                             }} 
                             className="border-2 w-full ps-2 rounded" required placeholder="330-423-9103"/>
-                            {/* <p>Start time</p>
-                            <p>{startTime.toLocaleTimeString("en-us")}</p>
+                            <p>Start time</p>
+                            <input type="time" value={startTime} onChange={(e) => changeStartTime(e.target.value)}/>
                             <p>End time</p>
-                            <p>{endTime.toLocaleTimeString("en-us")}</p> */}
+                            <input type="time" value={endTime} onChange={(e) => changeEndTime(e.target.value)}/>
                             <p>Employee</p>
                             <p>{employeeName}</p>
                         </div>
