@@ -43,24 +43,24 @@ export default function AppointmentEditModal({
     employeeId: employeeId,
     services: allServices,
   });
-  const [startTime, setStartTime] = useState(start.substring(11));
-  const [endTime, setEndTime] = useState(end.substring(11));
 
   function changeName(name) {
     const newName = name;
     setFormData({ ...formData, name: newName });
   }
 
-  function changeStartTime(time) {
-    const newTime = time;
-    setStartTime(newTime);
-    setFormData({ ...formData, startTime: newTime });
+  function changeStartTime(dateTime) {
+    const newDateTime = dateTime;
+    const newStartTime = newDateTime.substring(newDateTime.length - 6);
+    const newDate = dateTime.substring(0, 10);
+    setFormData({ ...formData, startTime: newStartTime, date: newDate });
   }
 
-  function changeEndTime(time) {
-    const newTime = time;
-    setEndTime(newTime);
-    setFormData({ ...formData, endTime: newTime });
+  function changeEndTime(dateTime) {
+    const newDateTime = dateTime;
+    const newEndime = newDateTime.substring(newDateTime.length - 6);
+    const newDate = dateTime.substring(0, 10);
+    setFormData({ ...formData, endTime: newEndime, date: newDate });
   }
 
   function changePhoneNumber(inputPhoneNumber) {
@@ -140,14 +140,14 @@ export default function AppointmentEditModal({
                   />
                   <p>Start time</p>
                   <input
-                    type="time"
-                    value={startTime}
+                    type="datetime-local"
+                    value={formData.date + formData.startTime}
                     onChange={(e) => changeStartTime(e.target.value)}
                   />
                   <p>End time</p>
                   <input
-                    type="time"
-                    value={endTime}
+                    type="datetime-local"
+                    value={formData.date + formData.endTime}
                     onChange={(e) => changeEndTime(e.target.value)}
                   />
                   <p>Employee</p>
