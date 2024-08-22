@@ -26,58 +26,56 @@ function Calendar() {
   var today = new Date(startDate.toString());
 
   // gets all services
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/Services");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setServices(data);
-      } catch (error) {
-        console.error(error);
+  const fetchServices = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/Services");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
-
+      const data = await response.json();
+      setServices(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
     fetchServices();
   }, []);
 
   // gets all employees
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/Employees");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setEmployees(data);
-      } catch (error) {
-        console.error(error);
+  const fetchEmployees = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/Employees");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
-
+      const data = await response.json();
+      setEmployees(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
     fetchEmployees();
   }, []);
 
   // gets all appointments for current date shown
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const date = startDate.toString().substring(0, 10);
-        const response = await fetch(
-          `http://localhost:8080/Appointments/date/${date}`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setEvents(data);
-      } catch (error) {
-        console.error(error);
+  const fetchAppointments = async () => {
+    try {
+      const date = startDate.toString().substring(0, 10);
+      const response = await fetch(
+        `http://localhost:8080/Appointments/date/${date}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
+      const data = await response.json();
+      setEvents(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
     fetchAppointments();
   }, [startDate]);
 
@@ -121,6 +119,9 @@ function Calendar() {
           onClose={() => {
             setIsCreateModalOpen(false);
           }}
+          renderEvents={() => {
+            fetchAppointments();
+          }}
           employeeId={selectedEmployee}
           employeeName={
             employees.find((employee) => employee.id == selectedEmployee).name
@@ -144,6 +145,9 @@ function Calendar() {
             events.find((event) => event.id === selectedAppointment)?.name ||
             "Unknown"
           }
+          renderEvents={() => {
+            fetchAppointments();
+          }}
           inputPhoneNumber={selectedPhoneNumber}
           selectedServices={selectedServices}
         />

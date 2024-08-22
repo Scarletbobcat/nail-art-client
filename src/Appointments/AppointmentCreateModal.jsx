@@ -12,6 +12,7 @@ AppointmentCreateModal.propTypes = {
   end: PropTypes.string,
   employeeId: PropTypes.number,
   employeeName: PropTypes.string,
+  renderEvents: PropTypes.func,
 };
 
 function AppointmentCreateModal({
@@ -22,6 +23,7 @@ function AppointmentCreateModal({
   end,
   employeeId,
   employeeName,
+  renderEvents,
 }) {
   const [showBanner, setShowBanner] = useState(false);
   const [bannerColor, setBannerColor] = useState("");
@@ -131,6 +133,7 @@ function AppointmentCreateModal({
     if (isValid) {
       try {
         await createAppointment(formData);
+        renderEvents();
         onClose(); // Close the modal if the appointment is created successfully
       } catch (error) {
         alert(error);

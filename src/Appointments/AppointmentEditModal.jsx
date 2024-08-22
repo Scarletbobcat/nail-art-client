@@ -15,6 +15,7 @@ AppointmentEditModal.propTypes = {
   start: PropTypes.string,
   end: PropTypes.string,
   inputPhoneNumber: PropTypes.string,
+  renderEvents: PropTypes.func,
 };
 
 export default function AppointmentEditModal({
@@ -29,6 +30,7 @@ export default function AppointmentEditModal({
   inputPhoneNumber,
   start,
   end,
+  renderEvents,
 }) {
   const [showBanner, setShowBanner] = useState(false);
   const [bannerColor, setBannerColor] = useState("");
@@ -102,6 +104,7 @@ export default function AppointmentEditModal({
     if (isValid) {
       try {
         await editAppointment(formData);
+        renderEvents();
         onClose(); // Close the modal if the appointment is created successfully
       } catch (error) {
         alert(error);
