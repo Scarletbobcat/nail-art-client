@@ -12,7 +12,7 @@ function Navbar() {
       <nav>
         <div className="top-0 flex justify-between mx-auto p-3 items-center border-b">
           <div className="font-bold text-xl">
-            <Link to="/">Nail Art</Link>
+            <Link to="/">Nail Art & Spa LLC.</Link>
           </div>
           <ul className="flex gap-8 md:gap-16 items-center justify-center text-center cursor-pointer">
             {navItems.map((link, index) => (
