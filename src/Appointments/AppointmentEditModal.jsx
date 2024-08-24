@@ -16,16 +16,18 @@ AppointmentEditModal.propTypes = {
   end: PropTypes.string,
   inputPhoneNumber: PropTypes.string,
   renderEvents: PropTypes.func,
+  allEmployees: PropTypes.array,
 };
 
 export default function AppointmentEditModal({
   selectedServices,
   allServices,
+  allEmployees,
   appointmentId,
   isModalOpen,
   onClose,
   employeeId,
-  employeeName,
+  // employeeName,
   inputName,
   inputPhoneNumber,
   start,
@@ -96,6 +98,11 @@ export default function AppointmentEditModal({
     });
     setFormData({ ...formData, services: selectedServices });
     setTempServices(newServices);
+  }
+
+  function changeEmployee(selectedEmployee) {
+    const newEmployeeId = selectedEmployee.value;
+    setFormData({ ...formData, employeeId: newEmployeeId });
   }
 
   const handleSaveChanges = async () => {
@@ -236,7 +243,16 @@ export default function AppointmentEditModal({
                     onChange={(e) => changeEndTime(e.target.value)}
                   />
                   <p>Employee</p>
-                  <p>{employeeName}</p>
+                  <Select
+                    id="employee"
+                    options={allEmployees}
+                    value={allEmployees.find(
+                      (e) => e.value === formData.employeeId
+                    )}
+                    onChange={changeEmployee}
+                    className="text-black w-full"
+                    required
+                  />
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">

@@ -148,6 +148,12 @@ function Calendar() {
           renderEvents={() => {
             fetchAppointments();
           }}
+          allEmployees={employees.map((e) => {
+            return {
+              value: e.id,
+              label: e.name,
+            };
+          })}
           inputPhoneNumber={selectedPhoneNumber}
           selectedServices={selectedServices}
         />
@@ -179,9 +185,9 @@ function Calendar() {
                 start: e.date + e.startTime,
                 end: e.date + e.endTime,
                 text: e.name + "\n" + services + e.phoneNumber,
-                barColor: employees.find(
-                  (employee) => employee.id == e.employeeId
-                ).color,
+                barColor:
+                  employees.find((employee) => employee.id == e.employeeId)
+                    ?.color || "#000000",
               };
             })}
             ref={calendarRef}
@@ -210,6 +216,7 @@ function Calendar() {
             }}
             businessBeginsHour={10}
             businessEndsHour={19}
+            eventResizeHandling="Disabled"
           />
         </div>
       </div>
