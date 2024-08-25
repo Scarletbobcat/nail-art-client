@@ -75,7 +75,6 @@ export default function AppointmentEditModal({
   }
 
   async function editAppointment(appointment) {
-    console.log(appointment);
     try {
       const response = await fetch("http://localhost:8080/Appointments/Edit", {
         method: "PUT",
@@ -120,6 +119,29 @@ export default function AppointmentEditModal({
     } else {
       setBannerColor("bg-red-500");
       setShowBanner(true);
+    }
+  };
+
+  const handleDelete = async () => {
+    console.log({ ...formData, services: tempServices });
+    try {
+      const response = await fetch(
+        "http://localhost:8080/Appointments/Delete",
+        {
+          method: "DELETE",
+          body: JSON.stringify({ ...formData, services: tempServices }),
+          headers: {
+            "Content-Type": "application/json", // Indicate that the request body is JSON
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network error has occurred");
+      }
+      renderEvents();
+      onClose();
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -185,7 +207,7 @@ export default function AppointmentEditModal({
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold text-black">
-                    Edit an Appointment
+                    Edit/Delete an Appointment
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -255,21 +277,31 @@ export default function AppointmentEditModal({
                   />
                 </div>
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={onClose}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={handleSaveChanges}
-                  >
-                    Save Changes
-                  </button>
+                <div className="flex items-center justify-between p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <div>
+                    <button
+                      className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={onClose}
+                    >
+                      Close
+                    </button>
+                    <button
+                      className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={handleSaveChanges}
+                    >
+                      Save Changes
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
