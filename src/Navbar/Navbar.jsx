@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Dropdown from "./Dropdown";
-import { useState } from "react";
 
 function Navbar() {
   const navItems = [
@@ -20,7 +19,6 @@ function Navbar() {
     { title: "Employees", url: "/Employees" },
     { title: "Services", url: "/Services" },
   ];
-  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <>
@@ -33,16 +31,7 @@ function Navbar() {
             {navItems.map((link, index) => (
               <li key={index} className="text-sm py-2">
                 {link.subMenu ? (
-                  <>
-                    <button
-                      onClick={() => {
-                        setShowDropdown(!showDropdown);
-                      }}
-                    >
-                      {link.title}
-                    </button>
-                    <Dropdown items={link.subMenu} isShown={showDropdown} />
-                  </>
+                  <Dropdown items={link.subMenu} title={link.title} />
                 ) : (
                   <Link to={link.url}>{link.title}</Link>
                 )}
