@@ -38,7 +38,9 @@ export default function Dropdown({ items, title }) {
         <ul id="dropdown">
           {items.map((submenu, index) => (
             <li key={index} className="p-2">
-              <Link to={submenu.url}>{submenu.title}</Link>
+              <Link to={submenu.url} onClick={() => setIsShown(false)}>
+                {submenu.title}
+              </Link>
             </li>
           ))}
         </ul>
