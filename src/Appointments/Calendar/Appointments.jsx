@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import "./Appointments.css";
 import {
   DayPilotCalendar,
   DayPilot,
@@ -81,7 +80,10 @@ function Calendar() {
 
   return (
     <>
-      <div id="header" className="flex justify-center m-2 border-2 rounded-lg">
+      <div
+        id="header"
+        className="flex justify-center m-2 border-2 rounded-lg bg-white"
+      >
         <div id="current-day" className="mx-2 p-2 content-center">
           <p>{"Date: " + today.toDateString()}</p>
         </div>
