@@ -82,7 +82,7 @@ function Calendar() {
     <>
       <div
         id="header"
-        className="flex justify-center m-2 border-2 rounded-lg bg-white"
+        className="flex p-2.5 justify-center m-2 border-2 rounded-lg bg-white"
       >
         <div id="current-day" className="mx-2 p-2 content-center">
           <p>{"Date: " + today.toDateString()}</p>
@@ -160,8 +160,8 @@ function Calendar() {
           selectedServices={selectedServices}
         />
       ) : null}
-      <div id="calendar-container">
-        <div id="navigator">
+      <div id="calendar-container" className="flex">
+        <div id="navigator" className="p-2.5">
           <DayPilotNavigator
             selectMode={"Day"}
             showMonths={1}
@@ -170,7 +170,7 @@ function Calendar() {
             onTimeRangeSelected={(args) => setStartDate(args.day)}
           />
         </div>
-        <div id="calendar">
+        <div id="calendar" className="p-2.5">
           <DayPilotCalendar
             viewType="Resources"
             columns={employees}
