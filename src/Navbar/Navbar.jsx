@@ -23,8 +23,8 @@ function Navbar() {
   return (
     <>
       <nav>
-        <div className="top-0 flex px-4 h-16 justify-between items-center mx-auto border-b">
-          <div className="font-bold text-xl h-full flex items-center">
+        <div className="top-0 flex h-16 justify-between items-center mx-auto border-b">
+          <div className="font-bold px-4 text-xl h-full flex items-center">
             <Link to="/" className="h-full flex items-center">
               Nail Art & Spa LLC.
             </Link>
