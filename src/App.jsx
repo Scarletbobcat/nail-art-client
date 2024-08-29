@@ -1,4 +1,4 @@
-import Calendar from "./Appointments/Appointments.jsx";
+import Calendar from "./Appointments/Calendar/Appointments.jsx";
 import Home from "./Home/Home.jsx";
 import Employees from "./Employees/Employees.jsx";
 import Services from "./Services/Services.jsx";
