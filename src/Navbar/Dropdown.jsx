@@ -22,29 +22,39 @@ export default function Dropdown({ items, title }) {
   });
 
   return (
-    <div className="relative text-left" ref={dropdownRef}>
-      <button
-        onClick={() => {
-          setIsShown(!isShown);
-        }}
-      >
-        {title}
-      </button>
+    <>
       <div
-        className={`absolute right-0 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
-          isShown ? "" : "hidden"
-        }`}
+        className="relative text-left h-full hover:bg-neutral-200 px-10"
+        ref={dropdownRef}
       >
-        <ul id="dropdown">
-          {items.map((submenu, index) => (
-            <li key={index} className="p-2">
-              <Link to={submenu.url} onClick={() => setIsShown(false)}>
-                {submenu.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <button
+          className="h-full"
+          onClick={() => {
+            setIsShown(!isShown);
+          }}
+        >
+          {title}
+        </button>
+        <div
+          className={`absolute right-0 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+            isShown ? "" : "hidden"
+          }`}
+        >
+          <ul id="dropdown">
+            {items.map((submenu, index) => (
+              <li key={index} className="p-2 hover:bg-neutral-200">
+                <Link
+                  to={submenu.url}
+                  onClick={() => setIsShown(false)}
+                  className="block"
+                >
+                  {submenu.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

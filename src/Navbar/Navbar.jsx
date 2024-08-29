@@ -23,17 +23,24 @@ function Navbar() {
   return (
     <>
       <nav>
-        <div className="top-0 flex justify-between mx-auto p-3 items-center border-b">
-          <div className="font-bold text-xl">
-            <Link to="/">Nail Art & Spa LLC.</Link>
+        <div className="top-0 flex px-4 h-16 justify-between items-center mx-auto border-b">
+          <div className="font-bold text-xl h-full flex items-center">
+            <Link to="/" className="h-full flex items-center">
+              Nail Art & Spa LLC.
+            </Link>
           </div>
-          <ul className="flex gap-8 md:gap-16 items-center justify-center text-center cursor-pointer">
+          <ul className="flex h-full items-center justify-center cursor-pointer">
             {navItems.map((link, index) => (
-              <li key={index} className="text-sm py-2">
+              <li key={index} className="text-sm flex h-full items-center">
                 {link.subMenu ? (
                   <Dropdown items={link.subMenu} title={link.title} />
                 ) : (
-                  <Link to={link.url}>{link.title}</Link>
+                  <Link
+                    to={link.url}
+                    className="flex h-full items-center hover:bg-neutral-200 px-10"
+                  >
+                    {link.title}
+                  </Link>
                 )}
               </li>
             ))}
