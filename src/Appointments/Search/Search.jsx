@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AppointmentCard from "./AppointmentCard";
 
 export default function Search() {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -79,7 +80,7 @@ export default function Search() {
       {/* content */}
       <ul>
         {data.map((appointment, index) => {
-          return <li key={index}>{appointment.name}</li>;
+          return <AppointmentCard key={index} appointment={appointment} />;
         })}
       </ul>
     </>
