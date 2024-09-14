@@ -1,10 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AppointmentCard from "./AppointmentCard";
 
 export default function Search() {
   const [phoneNumber, setPhoneNumber] = useState("");
   // const [formData, setFormData] = useState({});
   const [data, setData] = useState([]);
+  const [employees, setEmployees] = useState([]);
+
+  // gets all employees
+  const fetchEmployees = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/Employees");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setEmployees(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEmployees();
+  }, []);
 
   const getAppointments = async (phoneNumber) => {
     try {
@@ -42,7 +61,7 @@ export default function Search() {
   return (
     <>
       {/* header */}
-      <div className="ring-1 ring-black flex p-4 h-16 justify-center m-4 rounded-3xl">
+      <div className="ring-1 ring-black inline-block relative h-12 justify-center m-4 rounded-3xl">
         <input
           type="text"
           value={phoneNumber}
@@ -50,21 +69,20 @@ export default function Search() {
           onChange={(e) => {
             changePhoneNumber(e.target.value);
           }}
-          className="border-2 rounded-md ps-2"
+          className="w-full h-full ps-2 rounded-3xl"
         />
-
         <button
           onClick={() => {
             getAppointments(phoneNumber);
           }}
-          className="h-full w-7"
+          className="h-full w-12 absolute right transition rounded-full bg-red-500 content-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
             y="0px"
-            // width="100%"
-            // height="100%"
+            width="100%"
+            height="100%"
             viewBox="0 0 24 24"
             className="curser-pointer"
           >
@@ -78,11 +96,19 @@ export default function Search() {
         </button>
       </div>
       {/* content */}
-      <ul>
-        {data.map((appointment, index) => {
-          return <AppointmentCard key={index} appointment={appointment} />;
-        })}
-      </ul>
+      {data.map((appointment, index) => {
+        return (
+          <AppointmentCard
+            key={index}
+            appointment={{
+              ...appointment,
+              employeeName: employees.find(
+                (e) => e.id == appointment.employeeId
+              ).name,
+            }}
+          />
+        );
+      })}
     </>
   );
 }

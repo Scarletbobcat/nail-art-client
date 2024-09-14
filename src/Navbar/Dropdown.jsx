@@ -14,7 +14,7 @@ export default function Dropdown({ items, title }) {
   // this is to close the dropdown when click happens outside of it
   useEffect(() => {
     const handler = (e) => {
-      if (!dropdownRef.current.contains(e.target)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsShown(false);
       }
     };
