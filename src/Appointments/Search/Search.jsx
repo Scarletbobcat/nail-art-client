@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import AppointmentCard from "./AppointmentCard";
 
 export default function Search() {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -96,19 +95,50 @@ export default function Search() {
         </button>
       </div>
       {/* content */}
-      {data.map((appointment, index) => {
-        return (
-          <AppointmentCard
-            key={index}
-            appointment={{
-              ...appointment,
-              employeeName: employees.find(
-                (e) => e.id == appointment.employeeId
-              ).name,
-            }}
-          />
-        );
-      })}
+      <div>
+        <table className="w-full table table-striped table-bordered">
+          <thead>
+            <tr className="border-y-2 justify-between">
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Date</th>
+              <th>Employee</th>
+              <th>Services</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((appointment, index) => {
+              return (
+                <tr key={index}>
+                  <td>{appointment.name}</td>
+                  <td>{appointment.phoneNumber}</td>
+                  <td>
+                    {new Date(
+                      appointment.date + appointment.startTime
+                    ).toLocaleTimeString("en-US")}
+                  </td>
+                  <td>
+                    {new Date(
+                      appointment.date + appointment.endTime
+                    ).toLocaleTimeString("en-US")}
+                  </td>
+                  <td>{appointment.date}</td>
+                  <td>
+                    {
+                      employees.find(
+                        (employee) => employee.id == appointment.employeeId
+                      ).name
+                    }
+                  </td>
+                  <td>{appointment.services}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 
 AppointmentCard.propTypes = {
   appointment: PropTypes.object,
+  className: PropTypes.string,
 };
 
 // appointment = {
@@ -15,44 +16,39 @@ AppointmentCard.propTypes = {
 //   employeeName,
 // }
 
-export default function AppointmentCard({ appointment }) {
+export default function AppointmentCard({ appointment, className }) {
   return (
-    <div className="p-4 border-2">
-      <div className="flex">
-        <p className="text-2xl">{appointment.name}</p>
-      </div>
-      <div className="flex">
+    <tr className={`text-center ${className}`}>
+      <td className="">
+        <p className="">{appointment.name}</p>
+      </td>
+      <td className="">
         <p>{appointment.phoneNumber}</p>
-      </div>
-      <div className="flex">
-        <p>Start time:</p>
+      </td>
+      <td className="">
         <p>
           {new Date(
             appointment.date + appointment.startTime
           ).toLocaleTimeString("en-US")}
         </p>
-      </div>
+      </td>
 
-      <div className="flex">
-        <p>End time:</p>
+      <td className="">
         <p>
           {new Date(appointment.date + appointment.endTime).toLocaleTimeString(
             "en-US"
           )}
         </p>
-      </div>
-      <div className="flex">
-        <p>Date:</p>
+      </td>
+      <td className="">
         <p>{appointment.date}</p>
-      </div>
-      <div className="flex">
-        <p>Services:</p>
-        <p>{appointment.services}</p>
-      </div>
-      <div className="flex">
-        <p>Employee:</p>
+      </td>
+      <td className="">
         <p>{appointment.employeeName}</p>
-      </div>
-    </div>
+      </td>
+      <td className="">
+        <p>{appointment.services}</p>
+      </td>
+    </tr>
   );
 }
