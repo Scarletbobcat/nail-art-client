@@ -95,8 +95,8 @@ export default function Search() {
         </button>
       </div>
       {/* content */}
-      <div>
-        <table className="w-full table table-striped table-bordered">
+      <div className="p-4">
+        <table className="w-full table-fixed border-2">
           <thead>
             <tr className="border-y-2 justify-between">
               <th>Name</th>
@@ -111,28 +111,36 @@ export default function Search() {
           <tbody>
             {data.map((appointment, index) => {
               return (
-                <tr key={index}>
-                  <td>{appointment.name}</td>
-                  <td>{appointment.phoneNumber}</td>
-                  <td>
+                <tr key={index} className="odd:bg-gray-200">
+                  <td className="text-center">{appointment.name}</td>
+                  <td className="text-center">{appointment.phoneNumber}</td>
+                  <td className="text-center">
                     {new Date(
                       appointment.date + appointment.startTime
                     ).toLocaleTimeString("en-US")}
                   </td>
-                  <td>
+                  <td className="text-center">
                     {new Date(
                       appointment.date + appointment.endTime
                     ).toLocaleTimeString("en-US")}
                   </td>
-                  <td>{appointment.date}</td>
-                  <td>
+                  <td className="text-center">{appointment.date}</td>
+                  <td className="text-center">
                     {
                       employees.find(
                         (employee) => employee.id == appointment.employeeId
                       ).name
                     }
                   </td>
-                  <td>{appointment.services}</td>
+                  <td className="text-center">
+                    {appointment.services.map((s, index) => {
+                      return (
+                        <span key={index}>
+                          <p>{s}</p>
+                        </span>
+                      );
+                    })}
+                  </td>
                 </tr>
               );
             })}
