@@ -161,14 +161,19 @@ function Calendar() {
         />
       ) : null}
       <div id="calendar-container" className="flex">
-        <div id="navigator" className="p-2.5">
-          <DayPilotNavigator
-            selectMode={"Day"}
-            showMonths={1}
-            selectionDay={startDate}
-            startDate={startDate}
-            onTimeRangeSelected={(args) => setStartDate(args.day)}
-          />
+        <div className="p-2.5">
+          <div id="navigator" className="pb-4">
+            <DayPilotNavigator
+              selectMode={"Day"}
+              showMonths={1}
+              selectionDay={startDate}
+              startDate={startDate}
+              onTimeRangeSelected={(args) => setStartDate(args.day)}
+            />
+          </div>
+          <button className="p-2 w-full border-2 border-black rounded-md active:bg-gray-100 shadow-md">
+            Remind Appointments
+          </button>
         </div>
         <div id="calendar" className="p-2.5">
           <DayPilotCalendar
