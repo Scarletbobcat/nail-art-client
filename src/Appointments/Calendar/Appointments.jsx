@@ -89,7 +89,7 @@ function Calendar() {
         </div>
         <div id="daySelector">
           <button
-            className="size-11 mx-2 p-2 rounded-full active:bg-slate-100"
+            className="size-11 mx-2 p-2 rounded-full active:bg-gray-100"
             onClick={() => {
               setStartDate(startDate.addDays(-1));
             }}
@@ -98,7 +98,7 @@ function Calendar() {
           </button>
           <b className="p-2 content-center">Day</b>
           <button
-            className="size-11 mx-2 p-2 rounded-full active:bg-slate-100"
+            className="size-11 mx-2 p-2 rounded-full active:bg-gray-100"
             onClick={() => {
               setStartDate(startDate.addDays(1));
             }}
@@ -171,7 +171,7 @@ function Calendar() {
               onTimeRangeSelected={(args) => setStartDate(args.day)}
             />
           </div>
-          <button className="p-2 w-full border-2 border-black rounded-md active:bg-gray-100 shadow-md">
+          <button className="p-2 w-full border-2 border-gray-100 rounded-md active:bg-gray-100 shadow-md">
             Remind Appointments
           </button>
         </div>

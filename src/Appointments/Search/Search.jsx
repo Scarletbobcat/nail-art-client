@@ -60,39 +60,42 @@ export default function Search() {
   return (
     <>
       {/* header */}
-      <div className="ring-1 ring-black inline-block relative h-12 justify-center m-4 rounded-3xl">
-        <input
-          type="text"
-          value={phoneNumber}
-          placeholder="Enter phone number..."
-          onChange={(e) => {
-            changePhoneNumber(e.target.value);
-          }}
-          className="w-full h-full ps-2 rounded-3xl"
-        />
-        <button
-          onClick={() => {
-            getAppointments(phoneNumber);
-          }}
-          className="h-full w-12 absolute right transition rounded-full bg-red-500 content-center"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            x="0px"
-            y="0px"
-            width="100%"
-            height="100%"
-            viewBox="0 0 24 24"
-            className="curser-pointer"
+      <div className="flex">
+        <p className="content-center">Search</p>
+        <div className="ring-1 ring-black inline-block relative h-12 justify-center m-4 rounded-3xl">
+          <input
+            type="text"
+            value={phoneNumber}
+            placeholder="Enter phone number..."
+            onChange={(e) => {
+              changePhoneNumber(e.target.value);
+            }}
+            className="w-full h-full ps-2 rounded-3xl"
+          />
+          <button
+            onClick={() => {
+              getAppointments(phoneNumber);
+            }}
+            className="h-full w-12 absolute right transition rounded-full active:bg-gray-100 ml-1 content-center"
           >
-            <path d="M22 20L20 22 14 16 14 14 16 14z"></path>
-            <path d="M9,16c-3.9,0-7-3.1-7-7c0-3.9,3.1-7,7-7c3.9,0,7,3.1,7,7C16,12.9,12.9,16,9,16z M9,4C6.2,4,4,6.2,4,9c0,2.8,2.2,5,5,5 c2.8,0,5-2.2,5-5C14,6.2,11.8,4,9,4z"></path>
-            <path
-              d="M13.7 12.5H14.7V16H13.7z"
-              transform="rotate(-44.992 14.25 14.25)"
-            ></path>
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              x="0px"
+              y="0px"
+              width="90%"
+              height="90%"
+              viewBox="0 0 24 24"
+              className="curser-pointer pl-2"
+            >
+              <path d="M22 20L20 22 14 16 14 14 16 14z"></path>
+              <path d="M9,16c-3.9,0-7-3.1-7-7c0-3.9,3.1-7,7-7c3.9,0,7,3.1,7,7C16,12.9,12.9,16,9,16z M9,4C6.2,4,4,6.2,4,9c0,2.8,2.2,5,5,5 c2.8,0,5-2.2,5-5C14,6.2,11.8,4,9,4z"></path>
+              <path
+                d="M13.7 12.5H14.7V16H13.7z"
+                transform="rotate(-44.992 14.25 14.25)"
+              ></path>
+            </svg>
+          </button>
+        </div>
       </div>
       {/* content */}
       <div className="p-4">
