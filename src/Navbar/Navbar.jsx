@@ -42,14 +42,15 @@ function Navbar() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography
-          variant="h5"
-          style={{ flexGrow: 1 }}
-          sx={{
-            cursor: "pointer",
-          }}
-        >
-          <Link to="/">Nail Art & Spa LLC.</Link>
+        <Typography variant="h5" style={{ flexGrow: 1 }}>
+          <Link
+            to="/"
+            sx={{
+              cursor: "pointer",
+            }}
+          >
+            Nail Art & Spa LLC.
+          </Link>
         </Typography>
         {navItems.map((item, index) => {
           if (item.url) {
