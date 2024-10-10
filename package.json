@@ -12,6 +12,9 @@
   "dependencies": {
     "@daypilot/daypilot-lite-react": "^3.25.0",
     "@daypilot/modal": "^3.17.0",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.3",
     "lucide-react": "^0.447.0",
     "luxon": "^3.5.0",
     "prop-types": "^15.8.1",

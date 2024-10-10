@@ -1,5 +1,14 @@
 import { Link } from "react-router-dom";
-import Dropdown from "./Dropdown";
+// import Dropdown from "./Dropdown";
+import { useState } from "react";
+import {
+  AppBar,
+  Typography,
+  Toolbar,
+  Menu,
+  MenuItem,
+  Button,
+} from "@mui/material";
 
 function Navbar() {
   const navItems = [
@@ -20,34 +29,93 @@ function Navbar() {
     { title: "Services", url: "/Services" },
   ];
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <>
-      <nav>
-        <div className="top-0 flex h-16 justify-between items-center mx-auto border-b bg-white">
-          <div className="font-bold px-4 text-xl h-full flex items-center">
-            <Link to="/" className="h-full flex items-center">
-              Nail Art & Spa LLC.
-            </Link>
-          </div>
-          <ul className="flex h-full items-center justify-center cursor-pointer">
-            {navItems.map((link, index) => (
-              <li key={index} className="text-sm flex h-full items-center">
-                {link.subMenu ? (
-                  <Dropdown items={link.subMenu} title={link.title} />
-                ) : (
-                  <Link
-                    to={link.url}
-                    className="flex h-full items-center hover:bg-neutral-200 px-10"
-                  >
-                    {link.title}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-    </>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography
+          variant="h5"
+          style={{ flexGrow: 1 }}
+          sx={{
+            cursor: "pointer",
+          }}
+        >
+          <Link to="/">Nail Art & Spa LLC.</Link>
+        </Typography>
+        {navItems.map((item, index) => {
+          if (item.url) {
+            return (
+              <Button key={index} color="inherit">
+                <Link
+                  to={item.url}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  {item.title}
+                </Link>
+              </Button>
+            );
+          } else {
+            return (
+              <div key={index}>
+                <Button
+                  color="inherit"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                >
+                  {item.title}
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  sx={{
+                    "& .MuiMenu-paper": {
+                      width: anchorEl
+                        ? anchorEl.getBoundingClientRect().width
+                        : "auto", // Set width to button width
+                    },
+                  }}
+                >
+                  {item.subMenu?.map((subItem, index) => {
+                    return (
+                      <MenuItem onClick={handleClose} key={index}>
+                        <Link
+                          to={subItem.url}
+                          style={{
+                            display: "block",
+                            width: "100%",
+                            height: "100%",
+                          }}
+                        >
+                          {subItem.title}
+                        </Link>
+                      </MenuItem>
+                    );
+                  })}
+                </Menu>
+              </div>
+            );
+          }
+        })}
+      </Toolbar>
+    </AppBar>
   );
 }
 
