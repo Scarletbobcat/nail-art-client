@@ -67,7 +67,16 @@ export default function Search() {
     { field: "endTime", headerName: "End", width: 150 },
     { field: "date", headerName: "Date", width: 150 },
     { field: "employee", headerName: "Employee", width: 150 },
-    { field: "services", headerName: "Services", width: 150 },
+    {
+      field: "services",
+      headerName: "Services",
+      flex: 1,
+      // this is what is rendered in the cell if wanted to change in the future
+      // (maybe change so multiple services is easier to read)
+      // renderCell: (s) => {
+      //   return s.value;
+      // },
+    },
   ];
 
   const handleKeyDown = (event) => {
@@ -90,7 +99,9 @@ export default function Search() {
         date: row.date,
         employee: employees.find((employee) => employee.id == row.employeeId)
           .name,
-        services: row.services,
+        services: row.services.map((s) => {
+          return s;
+        }),
       };
     });
   }, [tempData, employees]);
@@ -125,11 +136,11 @@ export default function Search() {
             initialState={{
               pagination: {
                 paginationModel: {
-                  pageSize: 5,
+                  pageSize: 10,
                 },
               },
             }}
-            pageSizeOptions={[5]}
+            pageSizeOptions={[10]}
             disableRowSelectionOnClick
           />
         </Box>
